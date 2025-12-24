@@ -1,14 +1,18 @@
-
 provider "aws" {
-  region = "eu-west-1"
+  region = "us-east-2"
+   profile = "management"
 }
 
 module "child_accounts" {
-  source = "github.com/ZedRoff/devops-base//td6/tofu/modules/aws-organization"
+  source  = "brikis98/devops/book//modules/aws-organizations"
+  version = "1.0.0"
+  
+  create_organization = true                 
 
-  create_organization = true
+  accounts = {                               
+    development = "aman.ghazanfar+dev@edu.esiee.fr"
+    staging     = "aman.ghazanfar+stage@edu.esiee.fr"
+    production  ="aman.ghazanfar+prod@edu.esiee.fr"
+  }
 
-  dev_account_email   = "aman.ghazanfar+dev@edu.esiee.fr"
-  stage_account_email = "aman.ghazanfar+stage@edu.esiee.fr"
-  prod_account_email  = "aman.ghazanfar+prod@edu.esiee.fr"
 }
